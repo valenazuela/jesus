@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jesus J. | Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cream: #F7F4EE; --ink: #1A1916; --muted: #6B6860;
+  --accent: #2E5C3E; --accent-light: #EAF1EC; --border: #E0DDD5;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
+
+nav {
+  position: sticky; top: 0; z-index: 100; background: var(--cream);
+  border-bottom: 1px solid var(--border); padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-name { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); text-decoration: none; cursor: pointer; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 0.875rem; color: var(--muted); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+.nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+.page { display: none; min-height: calc(100vh - 56px); }
+.page.active { display: block; }
+
+.hero {
+  max-width: 960px; margin: 0 auto; padding: 5rem 2rem 4rem;
+  display: grid; grid-template-columns: 1fr 260px; gap: 4rem; align-items: start;
+}
+.hero-text h1 { font-family: var(--serif); font-size: 3.2rem; line-height: 1.1; font-weight: 400; margin-bottom: 0.25rem; }
+.tagline { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; }
+.hero-text p { font-size: 1rem; color: #3D3B35; max-width: 540px; margin-bottom: 1rem; }
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;
+  font-size: 0.875rem; font-weight: 500; color: var(--accent); border: 1px solid var(--accent);
+  padding: 0.6rem 1.25rem; border-radius: 2px; cursor: pointer; background: none;
+  font-family: var(--sans); transition: background 0.2s, color 0.2s;
+}
+.hero-cta:hover { background: var(--accent); color: white; }
+.photo-placeholder {
+  width: 100%; aspect-ratio: 3/4; background: var(--accent-light); border: 1px solid var(--border);
+  border-radius: 2px; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; color: var(--muted); font-size: 0.78rem; text-align: center; padding: 1rem; gap: 0.5rem;
+}
+.photo-placeholder svg { opacity: 0.35; }
+.photo-caption { margin-top: 0.5rem; font-size: 0.72rem; color: var(--muted); text-align: center; }
+
+.section { max-width: 960px; margin: 0 auto; padding: 4rem 2rem; }
+.section-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem; }
+.section h2 { font-family: var(--serif); font-size: 2rem; font-weight: 400; margin-bottom: 2.5rem; }
+.divider { max-width: 960px; margin: 0 auto; padding: 0 2rem; border-top: 1px solid var(--border); }
+
+.glance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.25rem; }
+.glance-card { padding: 1.25rem; border: 1px solid var(--border); border-radius: 2px; }
+.glance-card p:first-child { font-weight: 500; margin-bottom: 0.4rem; font-size: 0.95rem; }
+.glance-card p:last-child { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+.exp-item {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+  align-items: start; padding: 3rem 0; border-bottom: 1px solid var(--border);
+}
+.exp-item:first-child { padding-top: 0; }
+.exp-item:last-child { border-bottom: none; }
+.exp-tag {
+  display: inline-block; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); background: var(--accent-light);
+  padding: 0.2rem 0.6rem; border-radius: 2px; margin-bottom: 0.75rem;
+}
+.exp-content h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; margin-bottom: 0.2rem; line-height: 1.2; }
+.exp-meta { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.9rem; }
+.exp-content p { font-size: 0.92rem; color: #3D3B35; line-height: 1.75; }
+.exp-visual {
+  background: var(--accent-light); border: 1px solid var(--border); border-radius: 2px;
+  aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; color: var(--muted); font-size: 0.78rem; text-align: center; padding: 1.5rem; gap: 0.5rem;
+}
+.exp-visual svg { opacity: 0.3; }
+.img-caption { font-size: 0.7rem; color: var(--muted); margin-top: 0.4rem; font-style: italic; }
+
+.resume-wrap { max-width: 720px; }
+.resume-section { margin-bottom: 2.5rem; }
+.resume-section h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem; margin-bottom: 1rem; }
+.resume-entry { margin-bottom: 1.4rem; }
+.resume-entry-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.2rem; margin-bottom: 0.15rem; }
+.resume-entry-title { font-weight: 500; font-size: 0.92rem; }
+.resume-entry-date { font-size: 0.78rem; color: var(--muted); flex-shrink: 0; }
+.resume-entry-org { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.4rem; }
+.resume-bullets { list-style: none; padding-left: 0; }
+.resume-bullets li { font-size: 0.865rem; color: #3D3B35; padding-left: 1rem; position: relative; margin-bottom: 0.25rem; line-height: 1.65; }
+.resume-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--accent); }
+.skills-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tag { font-size: 0.78rem; background: var(--accent-light); color: var(--accent); padding: 0.2rem 0.7rem; border-radius: 2px; }
+
+.extras-intro { font-size: 1rem; color: #3D3B35; max-width: 600px; margin-bottom: 2.5rem; }
+.extras-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.extras-card { border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+.extras-img { background: var(--accent-light); aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; color: var(--muted); }
+.extras-img svg { opacity: 0.3; }
+.extras-body { padding: 1rem 1.25rem; }
+.extras-body h4 { font-family: var(--serif); font-size: 1rem; font-weight: 400; margin-bottom: 0.35rem; }
+.extras-body p { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.78rem; color: var(--muted); }
+
+@media (max-width: 680px) {
+  .hero { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .hero-photo { order: -1; max-width: 180px; }
+  .hero-text h1 { font-size: 2.4rem; }
+  .exp-item { grid-template-columns: 1fr; }
+  nav { padding: 0 1.25rem; }
+  .nav-links { gap: 1rem; }
+  .section { padding: 3rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name" onclick="showPage('home')">Jesus J.</span>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('experiences')" id="nav-experiences">Experiences</a></li>
+    <li><a onclick="showPage('resume')" id="nav-resume">Resume</a></li>
+    <li><a onclick="showPage('extras')" id="nav-extras">Adventures</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-text">
+      <p class="tagline">Economics · Policy · International Development</p>
+      <h1>Jesus<br>J. Jesus</h1>
+      <p>I am a first-generation college student at the University of Oregon's Clark Honors College, studying Applied Economics with a focus on how marginalized communities navigate economic systems across borders. My work spans policy research, community health advocacy, museum outreach, and cross-cultural organizing — grounded in the conviction that good analysis only matters when it reaches the people who need it most.</p>
+      <p>Growing up between Hillsboro, Oregon and a broader world that did not always have a category for me shaped how I ask questions and who I ask them for. I am drawn to international nonprofit consulting and development work — roles where economic insight, cultural fluency, and genuine community investment converge.</p>
+      <button class="hero-cta" onclick="showPage('experiences')">View my work →</button>
+    </div>
+    <div class="hero-photo">
+      <div class="photo-placeholder">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+        </svg>
+        <span>Add your professional photo here. Outdoor or natural light works great.</span>
+      </div>
+      <p class="photo-caption">Jesus J. Jesus · Eugene, OR</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="section">
+    <p class="section-label">At a glance</p>
+    <h2>What I bring to the table</h2>
+    <div class="glance-grid">
+      <div class="glance-card">
+        <p>Research &amp; Analysis</p>
+        <p>Comparative policy research, qualitative and quantitative methods, honors thesis-level writing across economics, geography, and political theory.</p>
+      </div>
+      <div class="glance-card">
+        <p>Community Engagement</p>
+        <p>Multicultural recruiting, museum outreach, campus health advocacy, and voter organizing — consistently centering underrepresented communities.</p>
+      </div>
+      <div class="glance-card">
+        <p>Cross-Cultural Fluency</p>
+        <p>Native Spanish speaker. Field research in Berlin. Upcoming internships in Singapore and Bangkok. Beginner Mandarin. Comfortable navigating between worlds.</p>
+      </div>
+      <div class="glance-card">
+        <p>Leadership &amp; Institution-Building</p>
+        <p>Founding cohort of CELI, GSS Student Advisory Board, Student Health Council advisor — experience building programs from the ground up.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCES -->
+<div class="page" id="page-experiences">
+  <div class="section">
+    <p class="section-label">Work &amp; Projects</p>
+    <h2>Selected experiences</h2>
+
+    <!-- 1. Honors Thesis -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Academic Research</span>
+        <h3>Honors Thesis — Southeast Asia</h3>
+        <p class="exp-meta">Clark Honors College, UO · 2024–2026 · Advisor: Dr. Anca Tristea</p>
+        <p>Designed and executed a comparative analysis of minority quality of life across three Southeast Asian case studies: Rohingya communities in Myanmar, highland peoples in Thailand, and migrant workers in Singapore. Synthesized datasets from the World Bank, UNHCR, and ILO alongside peer-reviewed literature to build an analytical framework spanning legal status, labor access, land rights, and health indicators. Navigated competing disciplinary methodologies — economics, human geography, political theory — to produce a unified argument that resists easy conclusions and centers the people most affected by policy failures.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span>Replace with research notes, a map, or fieldwork image</span>
+        </div>
+        <p class="img-caption">Comparative framework — Southeast Asia case studies, 2024–2026</p>
+      </div>
+    </div>
+
+    <!-- 2. Berlin GEO -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Field Research</span>
+        <h3>Global Education Oregon — Berlin</h3>
+        <p class="exp-meta">GEO / UNC–Chapel Hill · Berlin, Germany · June–August 2024</p>
+        <p>Selected as one of only 15 students for a highly competitive program led by UNC–Chapel Hill Undergraduate Dean Ian F. McNeely, in collaboration with the Clark Honors College. Conducted field research at major political and historical sites — including the Reichstag and the Sachsenhausen Concentration Camp Memorial — to examine how national memory shapes modern democratic policy. Brought an economist's lens to questions about institutional memory, reparative policy, and the long-term social costs of historical erasure. The program sharpened my ability to read political spaces, not just political texts.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          <span>Replace with a Berlin fieldwork or travel photo</span>
+        </div>
+        <p class="img-caption">Field research, Berlin, Summer 2024</p>
+      </div>
+    </div>
+
+    <!-- 3. CELI -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Climate Justice</span>
+        <h3>Climate Justice Fellow — CELI</h3>
+        <p class="exp-meta">Breach Collective · Eugene Clean Energy Leadership Institute · February 2026–Present</p>
+        <p>Selected as one of 15 members for the inaugural 2026 cohort of the Eugene Clean Energy Leadership Institute, a selective program at the intersection of climate policy and grassroots organizing. Participate in intensive workshops on digital strategy, public communications, and community mobilization. Contribute to building a program that centers frontline communities in clean energy conversations — because the question of who benefits from a green economy is still very much open.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/><path d="M12 6v6l4 2"/></svg>
+          <span>Replace with a CELI workshop or cohort photo</span>
+        </div>
+        <p class="img-caption">CELI inaugural cohort, Eugene, OR, 2026</p>
+      </div>
+    </div>
+
+    <!-- 4. UO Health Center -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Health Advocacy</span>
+        <h3>Student Health Council</h3>
+        <p class="exp-meta">University of Oregon Health Center · Eugene, OR · December 2025–Present</p>
+        <p>Collaborate with students, staff, and campus partners to identify health disparities and advance student-led action projects that address them. Advise the UHS Executive Director on student health fees, insurance access, outreach initiatives, and campus health priorities — translating student experience into institutional decision-making. Applied the same community-centered lens I use in research to examine how health systems either include or exclude the people they are supposed to serve.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span>Replace with a meeting, event, or campus photo</span>
+        </div>
+        <p class="img-caption">UO Student Health Council, Eugene, OR</p>
+      </div>
+    </div>
+
+    <!-- 5. Multicultural Recruiter -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Outreach &amp; Inclusion</span>
+        <h3>Multicultural Recruiter &amp; Ambassador</h3>
+        <p class="exp-meta">UO Student Welcome Center · Eugene, OR · January 2024–December 2025</p>
+        <p>Advocated for institutional policies and practices supporting underrepresented and marginalized student communities at one of Oregon's flagship universities. Facilitated cross-cultural dialogue and built bridges between incoming students and a campus that can feel unwelcoming without the right support. Drew directly on my own experience as a first-generation student to make the case — in conversations with prospective students and institutional leadership alike — that belonging has to be built intentionally, not assumed.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          <span>Replace with a campus event or welcome center photo</span>
+        </div>
+        <p class="img-caption">UO Student Welcome Center, Eugene, OR, 2024–2025</p>
+      </div>
+    </div>
+
+    <!-- 6. Museum -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Community Engagement</span>
+        <h3>Community Engagement Coordinator</h3>
+        <p class="exp-meta">UO Museum of Natural and Cultural History · Eugene, OR · January 2023–September 2024</p>
+        <p>Developed and maintained partnerships with community organizations to expand museum accessibility beyond the campus. Collaborated with local schools, businesses, and community groups to increase participation in museum programming — particularly for communities that rarely see themselves reflected in cultural institutions. Built the relationship-management and partnership-development skills that are foundational to nonprofit and public sector work, in a context where the communities were specific and the stakes were real.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>Replace with a museum event or outreach photo</span>
+        </div>
+        <p class="img-caption">UO Museum of Natural and Cultural History, Eugene, OR</p>
+      </div>
+    </div>
+
+    <!-- 7. Starbucks -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Operations &amp; Leadership</span>
+        <h3>Assistant Manager</h3>
+        <p class="exp-meta">Starbucks Coffee Company · Hillsboro, OR · April 2021–September 2023</p>
+        <p>Collaborated with store leadership to meet sales goals and operational benchmarks in a high-volume retail environment. Led, coached, and trained a team of baristas — setting performance standards, resolving conflicts, and building a work culture where people wanted to show up. Managed daily operations in a multilingual workplace serving a diverse Hillsboro customer base. This role taught me how to lead without formal authority, how to communicate across difference under pressure, and that operations management is ultimately about people, not processes.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          <span>Replace with a photo from your time at Starbucks</span>
+        </div>
+        <p class="img-caption">Starbucks Coffee Company, Hillsboro, OR, 2021–2023</p>
+      </div>
+    </div>
+
+    <!-- 8. Yes on 119 -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Policy Organizing</span>
+        <h3>Yes on Measure 119</h3>
+        <p class="exp-meta">Community Organizer · Portland metro area, OR · 2024</p>
+        <p>Canvassed households across the Portland metro to build support for Oregon's first gig worker organizing rights measure. Developed and delivered economic messaging accessible to multilingual communities — translating policy language into the everyday concerns of workers who had never heard of a ballot measure. Tracked outreach data, coordinated volunteers, and made the case door-to-door that labor rights are not a partisan issue; they are a survival issue. The campaign pushed me to take my academic understanding of labor economics and make it useful at a stranger's doorstep.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span>Replace with a campaign or canvassing photo</span>
+        </div>
+        <p class="img-caption">Measure 119 canvassing, Portland metro area, 2024</p>
+      </div>
+    </div>
+
+    <!-- 9. AI Student Association -->
+    <div class="exp-item">
+      <div class="exp-content">
+        <span class="exp-tag">Technology &amp; Policy</span>
+        <h3>AI Student Association</h3>
+        <p class="exp-meta">University of Oregon · Eugene, OR · May 2025–Present</p>
+        <p>Analyze emerging AI trends and policy regulations through curated news reports and industry demonstrations to stay current in a rapidly evolving field. Engage in peer discussions on the intersection of artificial intelligence and public policy — particularly around labor displacement, algorithmic bias, and governance frameworks. My interest is less in the technical architecture of AI and more in the economic and policy implications of how it gets deployed, and who benefits when it does.</p>
+      </div>
+      <div>
+        <div class="exp-visual">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span>Replace with an association event or discussion photo</span>
+        </div>
+        <p class="img-caption">AI Student Association, University of Oregon, 2025–Present</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RESUME -->
+<div class="page" id="page-resume">
+  <div class="section">
+    <p class="section-label">Curriculum Vitae</p>
+    <h2>Resume</h2>
+    <div class="resume-wrap">
+
+      <div class="resume-section">
+        <h3>Education</h3>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">B.A. General Social Science — Applied Economics Concentration</span>
+            <span class="resume-entry-date">September 2023–2027</span>
+          </div>
+          <div class="resume-entry-org">Robert D. Clark Honors College, University of Oregon · Eugene, OR</div>
+          <ul class="resume-bullets">
+            <li>Completing rigorous interdisciplinary curriculum and original research thesis in selective honors community</li>
+            <li>Thesis: "Comparing and Contrasting the Quality of Life for Minorities in Developed and Developing Nations in Southeast Asia" — Advisor: Dr. Anca Tristea</li>
+            <li>Native Spanish speaker; demonstrated college-level proficiency through the CLEP examination</li>
+            <li>Relevant coursework: Intermediate Microeconomics (EC 311), Intermediate Macroeconomics (EC 313), Econometrics (EC 370), Principles of Microeconomics (EC 202), Statistics (STAT 243), Business Analytics (BA 215, BA 316), Urban &amp; Regional Economics (PPPM 446), Honors Colloquium (HC 441H), Human Geography (GEOG 141)</li>
+          </ul>
+        </div>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Global Education Oregon — Berlin Program</span>
+            <span class="resume-entry-date">June–August 2024</span>
+          </div>
+          <div class="resume-entry-org">University of Oregon / UNC–Chapel Hill · Berlin, Germany</div>
+          <ul class="resume-bullets">
+            <li>Selected as one of 15 students for competitive program led by UNC–Chapel Hill Undergraduate Dean Ian F. McNeely</li>
+            <li>Conducted field research at the Reichstag and Sachsenhausen Concentration Camp Memorial on national memory and modern democratic policy</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Experience</h3>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Student Health Council</span>
+            <span class="resume-entry-date">December 2025–Present</span>
+          </div>
+          <div class="resume-entry-org">University of Oregon Health Center · Eugene, OR</div>
+          <ul class="resume-bullets">
+            <li>Collaborate with students, staff, and campus partners to identify health concerns and address disparities through student-led action projects</li>
+            <li>Advise UHS Executive Director on student health fees, insurance access, outreach initiatives, and campus health priorities</li>
+          </ul>
+        </div>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Multicultural Recruiter and Ambassador</span>
+            <span class="resume-entry-date">January 2024–December 2025</span>
+          </div>
+          <div class="resume-entry-org">University of Oregon Student Welcome Center · Eugene, OR</div>
+          <ul class="resume-bullets">
+            <li>Advocated for institutional policies and practices supporting underrepresented and marginalized student communities</li>
+            <li>Facilitated cross-cultural dialogue and engagement among diverse student populations to foster inclusion and belonging</li>
+          </ul>
+        </div>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Community Engagement Coordinator</span>
+            <span class="resume-entry-date">January 2023–September 2024</span>
+          </div>
+          <div class="resume-entry-org">UO Museum of Natural and Cultural History · Eugene, OR</div>
+          <ul class="resume-bullets">
+            <li>Developed and maintained partnerships with diverse community organizations to expand museum outreach and accessibility</li>
+            <li>Collaborated with local schools, businesses, and community groups to increase community participation in museum programming</li>
+          </ul>
+        </div>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Assistant Manager</span>
+            <span class="resume-entry-date">April 2021–September 2023</span>
+          </div>
+          <div class="resume-entry-org">Starbucks Coffee Company · Hillsboro, OR</div>
+          <ul class="resume-bullets">
+            <li>Collaborated with store leadership to meet sales goals and operational benchmarks</li>
+            <li>Led, coached, and trained a team of baristas to maintain high performance standards and a positive work environment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Leadership &amp; Activities</h3>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Founding Cohort Member</span>
+            <span class="resume-entry-date">February 2026–Present</span>
+          </div>
+          <div class="resume-entry-org">Eugene Clean Energy Leadership Institute (CELI) · Eugene, OR</div>
+          <ul class="resume-bullets">
+            <li>Selected as one of 15 members for the inaugural 2026 CELI cohort — a selective leadership and advocacy program</li>
+            <li>Participate in intensive workshops on grassroots organizing, digital strategies, and public communications for climate justice</li>
+          </ul>
+        </div>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Member</span>
+            <span class="resume-entry-date">May 2025–Present</span>
+          </div>
+          <div class="resume-entry-org">Artificial Intelligence Student Association · University of Oregon</div>
+          <ul class="resume-bullets">
+            <li>Analyze emerging AI trends and policy regulations through curated daily news reports and industry demos</li>
+          </ul>
+        </div>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Founding Member</span>
+            <span class="resume-entry-date">2024–Present</span>
+          </div>
+          <div class="resume-entry-org">GSS Student Advisory Board · University of Oregon</div>
+        </div>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">Community Organizer</span>
+            <span class="resume-entry-date">2024</span>
+          </div>
+          <div class="resume-entry-org">Yes on Measure 119 · Portland metro area, OR</div>
+          <ul class="resume-bullets">
+            <li>Canvassed multilingual communities to build voter support for Oregon's gig worker organizing rights measure</li>
+            <li>Translated complex policy language into accessible economic messaging; coordinated volunteer outreach data tracking</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Upcoming</h3>
+        <div class="resume-entry">
+          <div class="resume-entry-header">
+            <span class="resume-entry-title">GlobalWorks International Internship Fellow</span>
+            <span class="resume-entry-date">Summer–Fall 2026</span>
+          </div>
+          <div class="resume-entry-org">Singapore (Summer 2026) · Bangkok, Thailand (Fall 2026)</div>
+          <ul class="resume-bullets">
+            <li>Selected for back-to-back international placements in nonprofit and community development sectors</li>
+            <li>Thailand placement includes regional travel and thesis fieldwork during gap period</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="resume-section">
+        <h3>Skills</h3>
+        <div class="skills-row">
+          <span class="skill-tag">Bilingual — English &amp; Spanish (Native)</span>
+          <span class="skill-tag">Policy Research</span>
+          <span class="skill-tag">Qualitative Methods</span>
+          <span class="skill-tag">Statistical Analysis</span>
+          <span class="skill-tag">Community Organizing</span>
+          <span class="skill-tag">Partnership Development</span>
+          <span class="skill-tag">Academic Writing</span>
+          <span class="skill-tag">Mandarin (Beginner)</span>
+          <span class="skill-tag">Photography</span>
+          <span class="skill-tag">Microsoft Office Suite</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ADVENTURES -->
+<div class="page" id="page-extras">
+  <div class="section">
+    <p class="section-label">Adventures</p>
+    <h2>Beyond the classroom</h2>
+    <p class="extras-intro">The richest learning often happens outside formal institutions — in a new city, behind a camera, or in a room where you are the only person who looks like you. These are a few windows into the rest of my life.</p>
+    <div class="extras-grid">
+      <div class="extras-card">
+        <div class="extras-img">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="extras-body">
+          <h4>Photography</h4>
+          <p>I document places, people, and the small moments that don't make headlines. My lens is drawn to urban texture and the faces of communities often rendered invisible in formal discourse.</p>
+        </div>
+      </div>
+      <div class="extras-card">
+        <div class="extras-img">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+        </div>
+        <div class="extras-body">
+          <h4>International travel</h4>
+          <p>From field research in Berlin to upcoming time in Singapore and Bangkok, travel is where my research becomes real. I am spending Summer–Fall 2026 across Southeast Asia, with regional exploration in between placements.</p>
+        </div>
+      </div>
+      <div class="extras-card">
+        <div class="extras-img">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        </div>
+        <div class="extras-body">
+          <h4>Inside-Out Prison Exchange</h4>
+          <p>Participated in the Inside-Out Prison Exchange Program — a course that brought UO and incarcerated students together as peers. One of the most formative educational experiences I have had.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Jesus J. Jesus · B.A. General Social Science, Applied Economics · Clark Honors College, University of Oregon</p>
+  <p style="margin-top: 0.25rem;">Seeking opportunities in international nonprofit consulting and community economic development.</p>
+</footer>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
